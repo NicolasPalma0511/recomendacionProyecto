@@ -39,16 +39,16 @@ echo "Token de trabajador: $WORKER_TOKEN"
 # Unir los nodos trabajadores al Swarm y construir las imágenes en cada nodo
 for NODE in "${WORKER_NODES[@]}"; do
     echo "Uniendo el nodo $NODE al Swarm..."
-    ssh root@$NODE "sudo docker swarm join --token $WORKER_TOKEN $MANAGER_IP:2377"
+    ssh -o StrictHostKeyChecking=no root@$NODE "sudo docker swarm join --token $WORKER_TOKEN $MANAGER_IP:2377"
 
     echo "Copiando archivos al nodo $NODE..."
-    scp -r ./app ./react/MiProyecto root@$NODE:/tmp/
+    scp -o StrictHostKeyChecking=no -r ./app ./react/MiProyecto root@$NODE:/tmp/
 
     echo "Construyendo la imagen para el servicio web en $NODE..."
-    ssh root@$NODE "sudo docker build -t myapp_web -f /tmp/app/Dockerfile /tmp/app"
+    ssh -o StrictHostKeyChecking=no root@$NODE "sudo docker build -t myapp_web -f /tmp/app/Dockerfile /tmp/app"
 
     echo "Construyendo la imagen para el servicio frontend en $NODE..."
-    ssh root@$NODE "sudo docker build -t myapp_frontend -f /tmp/react/MiProyecto/Dockerfile /tmp/react/MiProyecto"
+    ssh -o StrictHostKeyChecking=no root@$NODE "sudo docker build -t myapp_frontend -f /tmp/react/MiProyecto/Dockerfile /tmp/react/MiProyecto"
 done
 
 # Construir las imágenes en el nodo principal
