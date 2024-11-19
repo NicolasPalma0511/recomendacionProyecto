@@ -1,11 +1,17 @@
 #!/bin/bash
 
-# Variables para los nodos
-WORKER_NODES=("ec2-34-203-246-128.compute-1.amazonaws.com" "ec2-44-211-192-37.compute-1.amazonaws.com")
+# Validar que al menos dos direcciones de instancias fueron ingresadas
+if [ "$#" -lt 2 ]; then
+    echo "Uso: $0 <direccion_nodo1> <direccion_nodo2> [direccion_nodo3 ...]"
+    exit 1
+fi
 
-# Obtener la IP pública del nodo principal
-MANAGER_PUBLIC_IP=$(curl -s http://checkip.amazonaws.com)  # Obtener la IP pública del nodo
-MANAGER_IP=$(hostname -I | awk '{print $1}')  # Obtener la IP privada
+# Variables para los nodos
+WORKER_NODES=("$@")
+
+# Obtener la IP pública y privada del nodo principal
+MANAGER_PUBLIC_IP=$(curl -s http://checkip.amazonaws.com)
+MANAGER_IP=$(hostname -I | awk '{print $1}')
 echo "IP pública del nodo principal: $MANAGER_PUBLIC_IP"
 echo "IP privada del nodo principal: $MANAGER_IP"
 
