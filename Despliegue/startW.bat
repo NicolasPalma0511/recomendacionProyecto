@@ -12,8 +12,8 @@ REM Copiar el script temporal al servidor remoto
 scp -i docker.pem temp_script.sh ubuntu@ec2-44-204-62-28.compute-1.amazonaws.com:~/
 
 REM Ejecutar el script remoto en la instancia EC2
-ssh -i docker.pem ubuntu@ec2-3-89-21-194.compute-1.amazonaws.com "dos2unix ~/temp_script.sh"
-ssh -i docker.pem ubuntu@ec2-3-89-21-194.compute-1.amazonaws.com "bash ~/temp_script.sh"
+ssh -i docker.pem ubuntu@ec2-44-204-62-28.compute-1.amazonaws.com "dos2unix ~/temp_script.sh"
+ssh -i docker.pem ubuntu@ec2-44-204-62-28.compute-1.amazonaws.com "bash ~/temp_script.sh"
 
 REM Limpiar el archivo temporal local
 del temp_script.sh
