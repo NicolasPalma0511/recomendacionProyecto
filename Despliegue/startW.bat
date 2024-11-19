@@ -1,5 +1,7 @@
 @echo off
 
+cd /d "%~dp0"
+
 echo echo "Conectado a la instancia EC2" > temp_script.sh
 echo git clone https://github.com/NicolasPalma0511/recomendacionProyecto >> temp_script.sh
 echo cd recomendacionProyecto >> temp_script.sh
